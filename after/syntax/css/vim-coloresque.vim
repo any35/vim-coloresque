@@ -122,9 +122,9 @@ function! s:VimCssInit(update)
     if a:update==1
         call s:ClearMatches()
     endif
-    :set isk+=-
-    :set isk+=#
-    :set isk+=.
+    " :set isk+=-
+    " :set isk+=#
+    " :set isk+=.
 
     if len(keys(b:color_pattern))>0
         call s:RestoreColors()
@@ -301,7 +301,10 @@ function! s:AdditionalColors()
   "let w:colorDictRegExp = '\(' 
   for _color in keys(w:colorDict)
     "let w:colorDictRegExp.='\<'._color.'\>\|' 
-    call s:MatchColorValue(strpart(w:colorDict[tolower(_color)], 1), '\<\c'._color.'\>')
+    " old
+    " call s:MatchColorValue(strpart(w:colorDict[tolower(_color)], 1), '\<\c'._color.'\>')
+    " new regexp
+    call s:MatchColorValue(strpart(w:colorDict[tolower(_color)], 1), '\(^\|\s\|:\)\@<=\c'._color.'\($\|\s\|;\)\@=')
   endfor
   "let w:colorDictRegExp=strpart(w:colorDictRegExp, 0, len(w:colorDictRegExp)-2).'\)\c'
 endfunction
